@@ -1,0 +1,23 @@
+services:
+  db:
+    image: "postgres:16"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=wyett
+      - POSTGRES_DB=shelter
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  etl:
+    container_name: etl_container
+    build: .
+    command: shelter1000.csv
+    depends_on:
+     - db
+
+
+volumes:
+  db_data: 
