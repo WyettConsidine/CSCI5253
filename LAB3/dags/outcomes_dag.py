@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 from etl_scripts.pipeline import transform_data, load_data, load_fact_data
@@ -17,7 +17,7 @@ PQ_TARGET_DIR = AIRFLOW_HOME + '/data/{{ ds }}/processed'
 
 with DAG(
     dag_id="outcomes_dag",
-    start_date=datetime(2023,11,18),
+    start_date=datetime(2023,11,1),
     schedule_interval = '@daily'
 ) as dag:
     
